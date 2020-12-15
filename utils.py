@@ -40,11 +40,33 @@ def trans(instr_sepa: dict) -> dict:
 
         if flag1 or flag2:
             res_instr.append({
-                "instr": instr, "Rs": instr_sepa["RS"], "Rt": instr_sepa["RT"],
-                "Rd": instr_sepa["RD"], "SA": instr_sepa["SA"], "FUNCT": instr_sepa["FUNCT"]
+                "instr": instr, "OP": OP, "Rs": RS,
+                "Rt": RT, "Rd": RD, "SA": SA, "FUNCT": FUNCT
             })
     else:
         if len(res_instr) != 1:
             raise Exception("Instruction parse failed!", instr_set[instr])
 
     return res_instr
+
+'''
+e.g.
+    input:
+        {"val":0x123, "len":12},
+        {"val":0x456, "len":12},
+        {"val":0x789, "len":12}
+    output: 0x123456789
+
+    input:
+        {"val": 0b101011, "len": 6},
+        {"val": 0b1001011, "len": 7},
+        {"val": 0b1, "len": 1}
+    output: 0x2b97
+'''
+def hexCat(*input_tup):
+    assert len(input_tup) != 0
+    to_ret = 0
+    for i in range(len(input_tup)):
+        # print(input_tup[i]["len"], input_tup[i]["val"].bit_length(), input_tup[i]["len"])
+        to_ret = (to_ret << input_tup[i]["len"]) | input_tup[i]["val"]
+    return hex(to_ret)
