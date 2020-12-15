@@ -1,4 +1,4 @@
-# Mips-Disassembly.py
+# Mips-Disassembler.py
 
 ## 一、这是啥？
 
