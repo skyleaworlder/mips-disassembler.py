@@ -1,4 +1,4 @@
-from instructions_54 import instr_set
+from .instructions_54 import instr_set
 
 '''
   OP    RS    RT    RD    SA   FUNCT

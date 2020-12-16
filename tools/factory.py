@@ -1,4 +1,4 @@
-from utils import hexCat
+from .utils import hexCat
 class Instr_Factory:
 
     def __init__(
