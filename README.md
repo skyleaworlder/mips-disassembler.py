@@ -59,7 +59,7 @@ memory_initialization_vector =
 之后切换到 `main.py` 所在路径下，在终端运行：
 
 ```shell
-python main.py -d mips_31_mars_simulate.coe -o output.txt
+python main.py -d mips_31_mars_simulate.txt -o output.txt
 ```
 
 短暂地运行后，当前目录就会有非常 `nice` 的输出文件啦！
