@@ -21,3 +21,47 @@
 还是有一些东西我自我感觉很难处理，比如标号……
 
 所以就先这样吧，其他有时间再说。
+
+## 四、一开始居然忘了
+
+### 1. 使用方法
+
+```shell
+python main.py -d file_path_to_disassembly -o output_file_path
+```
+
+要注意这里的输入文件不是简单的 `*.coe` 文件，需要把正常 `*.coe` 文件前两行去掉！
+
+### 2. 使用例
+
+```bash
+-----
+    |---main.py
+    |---tools
+    |---mips_31_mars_simulate.txt
+```
+
+需要注意的是这里的输入为：
+
+![coe->txt](img/coe.png)
+
+没有前面两行的：
+
+```txt
+memory_initialization_radix = 16;
+memory_initialization_vector =
+```
+
+还请认真比较与真正的 `*.coe` 文件的差别：
+
+![真正的 coe](img/true_coe.png)
+
+之后切换到 `main.py` 所在路径下，在终端运行：
+
+```shell
+python main.py -d mips_31_mars_simulate.coe -o output.txt
+```
+
+短暂地运行后，当前目录就会有非常 `nice` 的输出文件啦！
+
+![nice!](img/nice.png)
