@@ -1,0 +1,1 @@
+python ../main.py -d ../mips_31_mars_simulate.coe -o ../output.txt
