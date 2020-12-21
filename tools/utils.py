@@ -1,14 +1,14 @@
 from .instructions_54 import instr_set
 
-'''
-  OP    RS    RT    RD    SA   FUNCT
-000000 00000 00000 00000 00000 000000
-
-separate an Integer into several parts:
-    OP, RS, RT, RD, SA, FUNCT
-
-'''
 def separate(input: int) -> dict:
+    '''
+    OP    RS    RT    RD    SA   FUNCT
+    000000 00000 00000 00000 00000 000000
+
+    separate an Integer into several parts:
+        OP, RS, RT, RD, SA, FUNCT
+
+    '''
     OP_bit, RS_bit, RT_bit, RD_bit, SA_bit, FUNCT_bit = 6, 5, 5, 5, 5, 6
     OP    = (input & 0b11111100000000000000000000000000) >> (RS_bit + RT_bit + RD_bit + SA_bit + FUNCT_bit)
     RS    = (input & 0b00000011111000000000000000000000) >> (RT_bit + RD_bit + SA_bit + FUNCT_bit)
@@ -18,13 +18,13 @@ def separate(input: int) -> dict:
     FUNCT = (input & 0b00000000000000000000000000111111)
     return { "OP": OP, "RS": RS, "RT": RT, "RD": RD, "SA": SA, "FUNCT": FUNCT }
 
-'''
-trans an dict { "OP", "RS", "RT", "RD", "SA", "FUNCT" }
-to an dict about { "intro", ... }
+def trans(instr_sepa: dict) -> list:
+    '''
+    trans a dict { "OP", "RS", "RT", "RD", "SA", "FUNCT" }
+    to a list about [{ "intro", ... }], while list.length == 1
 
-this function aims to find instruction type of input
-'''
-def trans(instr_sepa: dict) -> dict:
+    this function aims to find instruction type of input
+    '''
     OP, FUNCT, SA = instr_sepa["OP"], instr_sepa["FUNCT"], instr_sepa["SA"]
     RS, RT, RD = instr_sepa["RS"], instr_sepa["RT"], instr_sepa["RD"]
 
@@ -49,21 +49,21 @@ def trans(instr_sepa: dict) -> dict:
 
     return res_instr
 
-'''
-e.g.
-    input:
-        {"val":0x123, "len":12},
-        {"val":0x456, "len":12},
-        {"val":0x789, "len":12}
-    output: 0x123456789
-
-    input:
-        {"val": 0b101011, "len": 6},
-        {"val": 0b1001011, "len": 7},
-        {"val": 0b1, "len": 1}
-    output: 0x2b97
-'''
 def hexCat(*input_tup):
+    '''
+    e.g.
+        input:
+            {"val":0x123, "len":12},
+            {"val":0x456, "len":12},
+            {"val":0x789, "len":12}
+        output: 0x123456789
+
+        input:
+            {"val": 0b101011, "len": 6},
+            {"val": 0b1001011, "len": 7},
+            {"val": 0b1, "len": 1}
+        output: 0x2b97
+    '''
     assert len(input_tup) != 0
     to_ret = 0
     for i in range(len(input_tup)):
