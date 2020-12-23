@@ -13,14 +13,19 @@ def main(mode: str, infile_path: str, outfile_path=None):
 
     fin = open(infile_path)
     origin_lines = fin.readlines()
+    fin.close()
     origin_lines = [int(line.strip('\n'), 16) for line in origin_lines]
 
     # get instruction type
     sepa_lst = [separate(line) for line in origin_lines]
     trans_lst = [trans(line) for line in sepa_lst]
-    instr_txt_lst = []
+
+    # get addr
+    base_addr = 0x00400000
+    addr_lst = [hex(base_addr+idx*4) for idx, elem in enumerate(sepa_lst)]
 
     # process instructions input
+    instr_txt_lst = []
     for line in trans_lst:
         instr = line[0]
         instr_fact = Instr_Factory(
@@ -31,7 +36,7 @@ def main(mode: str, infile_path: str, outfile_path=None):
 
     # output result
     out = Output(mode)
-    out.method(origin_lines, instr_txt_lst, outfile_path)
+    out.method(addr_lst, origin_lines, instr_txt_lst, outfile_path)
 
 
 if __name__ == "__main__":

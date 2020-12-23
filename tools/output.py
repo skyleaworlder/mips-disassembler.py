@@ -16,7 +16,7 @@ class Output:
         assert self.mode in mode_func_map
         self.method = mode_func_map[mode]
 
-    def __FILE_output(self, origin_lines, instr_txt_lst, output_file_path):
+    def __FILE_output(self, addr_lst, origin_lines, instr_txt_lst, output_file_path):
         '''
         origin_lines:       instructions_input(list) in hex
         output_file_path:   balabala
@@ -31,23 +31,34 @@ class Output:
         instr_num_lg = ceil(log10(len(instr_txt_lst)))
         line_head_len = max(instr_num_lg, len("idx"))
         fout.write(
-            "{:{}{}}".format("idx", '>', line_head_len)+"    "
-            +"{:{}{}}".format("hex code", '>', 10)+"    "
-            +"{:{}}".format("mips-assembly", '<')+'\n'
+            "{:{}{}}".format("idx", '>', line_head_len)
+            +"    "+"{:{}{}}".format("address", '>', 10)
+            +"    "+"{:{}{}}".format("hex code", '>', 10)
+            +"    "+"{:{}}".format("mips-assembly", '<')+'\n'
         )
         # add breakline
-        fout.write("-"*40+'\n')
-        for idx, (origin_hex, instr_txt) in enumerate(zip(origin_lines, instr_txt_lst)):
-            fout.write("{:{}{}}".format(idx, '>', line_head_len)+"    "+"0x{:08x}".format(origin_hex)+"    "+instr_txt)
+        fout.write("-"*60+'\n')
+        for idx, (addr, origin_hex, instr_txt) in enumerate(zip(addr_lst, origin_lines, instr_txt_lst)):
+            fout.write(
+                "{:{}{}}".format(idx, '>', line_head_len)
+                +"    "+"0x{:08x}".format(int(addr, 16))
+                +"    "+"0x{:08x}".format(origin_hex)
+                +"    "+instr_txt
+            )
 
-    def __STD_output(self, origin_lines, instr_txt_lst, output_file_path=None):
+    def __STD_output(self, addr_lst, origin_lines, instr_txt_lst, output_file_path=None):
         instr_num_lg = ceil(log10(len(instr_txt_lst)))
         line_head_len = max(instr_num_lg, len("idx"))
         print(
-            "{:{}{}}".format("idx", '>', line_head_len)+"    "
-            +"{:{}{}}".format("hex code", '>', 10)+"    "
-            +"{:{}}".format("mips-assembly", '<')+'\n'
+            "{:{}{}}".format("idx", '>', line_head_len)
+            +"    "+"{:{}{}}".format("address", '>', 10)
+            +"    "+"{:{}{}}".format("hex code", '>', 10)
+            +"    "+"{:{}}".format("mips-assembly", '<')+'\n'
         )
-        print("-"*40+'\n')
-        for idx, (origin_hex, instr_txt) in enumerate(zip(origin_lines, instr_txt_lst)):
-            print("{:{}{}}".format(idx, '>', line_head_len)+"    "+"0x{:08x}".format(origin_hex)+"    "+instr_txt)
+        print("-"*60+'\n')
+        for idx, (addr, origin_hex, instr_txt) in enumerate(zip(addr_lst, origin_lines, instr_txt_lst)):
+            print(
+                "{:{}{}}".format(idx, '>', line_head_len)
+                +"    "+"0x{:08x}".format(int(addr, 16))
+                +"    "+"0x{:08x}".format(origin_hex)
+                +"    "+instr_txt)
