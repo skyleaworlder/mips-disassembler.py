@@ -65,3 +65,5 @@ python main.py -d mips_31_mars_simulate.txt -o output.txt
 短暂地运行后，当前目录就会有非常 `nice` 的输出文件啦！
 
 ![nice!](img/nice.png)
+
+有指令序号，有指令地址，有机器码，还有汇编指令。调试时你最需要的，这上面都有！
